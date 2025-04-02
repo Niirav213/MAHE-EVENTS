@@ -90,7 +90,16 @@ CREATE TABLE tickets (
   FOREIGN KEY (event_id) REFERENCES events(id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
+--triggers and sequence for tickets
+CREATE SEQUENCE tickets_seq START WITH 1 INCREMENT BY 1;
 
+CREATE OR REPLACE TRIGGER tickets_before_insert
+BEFORE INSERT ON tickets
+FOR EACH ROW
+WHEN (NEW.id IS NULL)
+BEGIN
+  SELECT tickets_seq.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
 -- Create sample data for testing
 INSERT INTO users (name, email, password, role) VALUES
 ('Admin User', 'admin@college.edu', '$2a$10$XdKa.mTsA/C6GRhGRK3TXeEG30VmBKz9Fd1UIUjGZO7MRCQg.rjCq', 'admin'), -- password: admin123
