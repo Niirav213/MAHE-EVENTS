@@ -35,6 +35,17 @@ CREATE TABLE events (
   FOREIGN KEY (organizer_id) REFERENCES users(id)
 );
 
+--sequence and triggers
+CREATE OR REPLACE TRIGGER events_before_insert
+BEFORE INSERT ON events
+FOR EACH ROW
+WHEN (NEW.id IS NULL)
+BEGIN
+  SELECT events_seq.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+/
+CREATE SEQUENCE events_seq  START WITH 1  INCREMENT BY 1  NOCACHE  NOCYCLE;
+
 -- Create Pending Events table (for event requests from regular users)
 CREATE TABLE pending_events (
   id INT AUTO_INCREMENT PRIMARY KEY,
