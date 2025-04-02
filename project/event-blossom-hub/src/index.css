@@ -1,0 +1,67 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 260 33% 98%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 262 47% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 197 84% 57%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 262 47% 94%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 262 47% 50%;
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-eventPurple text-white hover:bg-eventPurple-dark transition-colors rounded-md px-4 py-2 font-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-eventTeal text-white hover:bg-eventTeal-dark transition-colors rounded-md px-4 py-2 font-medium;
+  }
+  
+  .event-card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300;
+  }
+  
+  .section-title {
+    @apply text-2xl md:text-3xl font-semibold text-eventPurple-dark mb-6;
+  }
+}
