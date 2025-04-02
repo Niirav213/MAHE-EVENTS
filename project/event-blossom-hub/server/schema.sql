@@ -67,6 +67,18 @@ CREATE TABLE pending_events (
   FOREIGN KEY (requester_id) REFERENCES users(id)
 );
 
+--sequence and triggers for pending_events
+CREATE SEQUENCE pending_events_seq START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+CREATE OR REPLACE TRIGGER pending_events_before_insert
+BEFORE INSERT ON pending_events
+FOR EACH ROW
+WHEN (NEW.id IS NULL)
+BEGIN
+  SELECT pending_events_seq.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+/
+
+
 -- Create Tickets table
 CREATE TABLE tickets (
   id INT AUTO_INCREMENT PRIMARY KEY,
