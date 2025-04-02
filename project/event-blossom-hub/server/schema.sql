@@ -6,7 +6,7 @@ USE college_events;
 
 -- Create Users table
 CREATE TABLE users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id INT  PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   email VARCHAR(100) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
@@ -14,10 +14,20 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+--trigger for user
+CREATE SEQUENCE users_seq START WITH 1 INCREMENT BY 1;
 
+CREATE OR REPLACE TRIGGER users_before_insert
+BEFORE INSERT ON users
+FOR EACH ROW
+WHEN (NEW.id IS NULL)
+BEGIN
+  SELECT users_seq.NEXTVAL INTO :NEW.id FROM DUAL;
+END;
+/
 -- Create Events table
 CREATE TABLE events (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id INT  PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT,
   image_url VARCHAR(255),
@@ -48,7 +58,7 @@ CREATE SEQUENCE events_seq  START WITH 1  INCREMENT BY 1  NOCACHE  NOCYCLE;
 
 -- Create Pending Events table (for event requests from regular users)
 CREATE TABLE pending_events (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id INT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT,
   image_url VARCHAR(255),
@@ -81,7 +91,7 @@ END;
 
 -- Create Tickets table
 CREATE TABLE tickets (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id INT  PRIMARY KEY,
   event_id INT NOT NULL,
   user_id INT NOT NULL,
   ticket_code VARCHAR(50) NOT NULL UNIQUE,
